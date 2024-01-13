@@ -1,0 +1,54 @@
+﻿@model schoolManagment.Models.EtudiantViewModel
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.ActionLink("Add Etudiant", "Add", "Etudiant",null, new { @class="btn btn-primary"})
+    
+   
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">CNE</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Date de Niassance</th>
+            <th scope="col">Filiere</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var E in Model.Etudiants)
+        {
+            <tr>
+
+                <td>@E.CNE</td>
+                <td>@E.Name</td>
+                <td>@E.Nickname</td>
+                <td>@E.DateNaissance.ToShortDateString()</td>
+                <td>@E.Filiere</td>
+                <td class="buttons-column">
+
+                    <div class="flex-grow-1">
+                        @using (Html.BeginForm("Delete", "Etudiant", new { CNE = E.CNE }, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                           
+                            <input type="submit" class="btn btn-primary" value="Delete" />
+                        }
+                        </div>
+                </td>
+
+                <td class="buttons-column">
+
+                    @Html.ActionLink("Update", "Update", "Etudiant", new { CNE = E.CNE }, new { @class = "btn btn-primary" })
+
+                </td>
+                
+
+            </tr>
+        }
+    </tbody>
+</table>
+
